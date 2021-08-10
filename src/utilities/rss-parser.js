@@ -1,6 +1,7 @@
 const RSSParser = require("rss-parser");
 
 const parser = new RSSParser();
+const rss_url = "https://www.nasa.gov/rss/dyn/Houston-We-Have-a-Podcast.rss";
 
 // This function uses the rss-parser library to fetch the url that's passed
 // and return a javascript object.
@@ -19,27 +20,43 @@ const parser = new RSSParser();
 // 	}
 // }
 
-function getRSSFeed(rss_url) {
+async function getRSSFeed(rss_url) {
 	try {
-		(async () => {
-			const feed = await parser.parseURL(rss_url);
+		const feed = await parser.parseURL(rss_url);
 
-			let feedArray = [];
-			feed.items.forEach((item) => {
-				feedArray.push(item);
-			});
-			// console.log(feed);
+		let feedArray = [];
+		feed.items.forEach((item) => {
+			feedArray.push(item);
+		});
 
-			return feed;
-		})();
-		// return parser.parseURL(rss_url);
-	} catch (error) {
+		let JSONArr = JSON.stringify(feedArray);
+		return feed;
+	} catch (e) {
 		console.log("Error:", error.message);
 	}
-
-	// feed.items.forEach((item) => {
-	// 	console.log(item.title + ":" + item.link);
-	// });
 }
+
+// function getRSSFeed(rss_url) {
+// 	try {
+// 		(async () => {
+// 			const feed = await parser.parseURL(rss_url);
+
+// 			let feedArray = [];
+// 			feed.items.forEach((item) => {
+// 				feedArray.push(item);
+// 			});
+// 			// console.log(feed);
+
+// 			return feed;
+// 		})();
+// 		// return parser.parseURL(rss_url);
+// 	} catch (error) {
+// 		console.log("Error:", error.message);
+// 	}
+
+// 	// feed.items.forEach((item) => {
+// 	// 	console.log(item.title + ":" + item.link);
+// 	// });
+// }
 
 module.exports = getRSSFeed;

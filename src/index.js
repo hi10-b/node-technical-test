@@ -46,18 +46,20 @@ app.get("/nasa2", (req, res) => {
 	(async () => {
 		const feed4 = await getRSSFeed(url);
 
-		let feedArray4 = [];
-		// feed4.item.forEach((item) => {
-		// 	feedArray4.push(item);
-		// 	console.log("item " + item.title);
-		// });
-		console.log(feed4);
-		res.send(feed4);
+		let feedArray = [];
+
+		await Promise.all(
+			feed4.items.map(async (item) => {
+				feedArray.push(item);
+			})
+		);
+
+		feed4.items.map((item) => {});
+		let JSONArr = JSON.stringify(feedArray);
+		console.log("ffeed 4 " + JSONArr);
+		res.send(JSONArr);
 	})();
 
-	// const feedArray = feed3.forEach((items) => {
-	// 	console.log("item " + items.title);
-	// });
 	console.log();
 });
 
