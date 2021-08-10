@@ -50,11 +50,38 @@ app.get("/nasa2", (req, res) => {
 
 		await Promise.all(
 			feed4.items.map(async (item) => {
+				if (feedArray.length == 10) {
+					let JSONArr = JSON.stringify(feedArray);
+					console.log("ffeed 4 " + JSONArr);
+					res.send(JSONArr);
+				}
 				feedArray.push(item);
 			})
 		);
+		res.send("less then 10 items");
+		// feed4.items.map((item) => {});
+	})();
 
-		feed4.items.map((item) => {});
+	console.log();
+});
+
+app.get("/nasa3", (req, res) => {
+	// const feed3 = parser2(url);
+	// var feed = parser.parseURL(url);
+
+	(async () => {
+		const feed4 = await getRSSFeed(url);
+
+		let feedArray = [];
+
+		await Promise
+			.all
+			// for(let x = 0; x < 10; x++){
+			// 	feedArray.push(item);
+			// }
+			();
+
+		// feed4.items.map((item) => {});
 		let JSONArr = JSON.stringify(feedArray);
 		console.log("ffeed 4 " + JSONArr);
 		res.send(JSONArr);
